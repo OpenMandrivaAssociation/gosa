@@ -1,4 +1,4 @@
-%define tversion 2.5.8
+%define tversion 2.5.14
 %define apacheuser apache 
 %define apachegroup apache 
 %define webconf %{_sysconfdir}/httpd/conf/webapps.d/	
@@ -7,8 +7,8 @@
 
 Summary: 	Web Based LDAP Administration Program 
 Name:		gosa
-Version: 	2.5.8
-Release:	%mkrel 2
+Version: 	2.5.14
+Release:	%mkrel 1
 License: 	GPL
 Source: 	ftp://oss.GONICUS.de/pub/gosa/beta/%{name}-%{tversion}.tar.bz2
 Source1:	gosa.conf.mdv
@@ -203,10 +203,10 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS TODO README README.safemode README.urpmi
+%doc AUTHORS README README.urpmi
 %doc Changelog COPYING INSTALL FAQ doc/* 
-%doc contrib/altlinux contrib/fix_config.sh 
-%doc contrib/mysql contrib/opensides contrib/patches 
+#%doc contrib/altlinux contrib/fix_config.sh 
+#%doc contrib/mysql contrib/opensides contrib/patches 
 %doc contrib/scripts contrib/vacation_example.txt
 %doc *.php_ole
 
