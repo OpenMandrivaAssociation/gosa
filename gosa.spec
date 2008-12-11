@@ -19,7 +19,7 @@ URL: 		http://gosa.gonicus.de
 Group: 		System/Configuration/Other
 Requires:	apache-mod_php php-ldap php-imap php-mysql php-xml 
 Requires:	php-gd php-mhash php-cups php-iconv php-snmp
-Requires:	fping ImageMagick smbldap-tools php-mbstring
+Requires:	fping imagemagick smbldap-tools php-mbstring
 Buildarch: 	noarch
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:  apache-base > 2.0.54 dos2unix
