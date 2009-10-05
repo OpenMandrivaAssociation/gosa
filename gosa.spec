@@ -22,7 +22,7 @@ Requires:	php-gd php-cups php-iconv php-snmp
 Requires:	fping imagemagick smbldap-tools php-mbstring
 Buildarch: 	noarch
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:  apache-base > 2.0.54 dos2unix
+BuildRequires:  apache-base > 2.0.54
 
 %description
 GOsa is a combination of system-administrator and end-user web
@@ -176,7 +176,6 @@ EOF
 
 # (sb) rpmlint
 chmod +x contrib/scripts/*.pl
-dos2unix doc/guide/admin/es/manual_gosa_es_apache.tex
 
 %post
 %_post_webapp
