@@ -8,7 +8,7 @@
 Summary: 	Web Based LDAP Administration Program 
 Name:		gosa
 Version: 	2.5.14
-Release:	%mkrel 4
+Release:	%mkrel 5
 License: 	GPL
 Source: 	ftp://oss.GONICUS.de/pub/gosa/beta/%{name}-%{tversion}.tar.bz2
 Source1:	gosa.conf.mdv
@@ -18,7 +18,7 @@ Source3:	php_ole-%{oleversion}.tar.bz2
 URL: 		http://gosa.gonicus.de
 Group: 		System/Configuration/Other
 Requires:	apache-mod_php php-ldap php-imap php-mysql php-xml 
-Requires:	php-gd php-mhash php-cups php-iconv php-snmp
+Requires:	php-gd php-cups php-iconv php-snmp
 Requires:	fping imagemagick smbldap-tools php-mbstring
 Buildarch: 	noarch
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
