@@ -1,22 +1,19 @@
-%define tversion 2.5.14
 %define apacheuser apache 
 %define apachegroup apache 
-%define webconf %{_sysconfdir}/httpd/conf/webapps.d/	
-%define appdir %{_var}/www
 %define oleversion 0.0.0
 
 Summary: 	Web Based LDAP Administration Program 
 Name:		gosa
 Version: 	2.5.14
-Release:	%mkrel 5
+Release:	%mkrel 6
 License: 	GPL
-Source: 	ftp://oss.GONICUS.de/pub/gosa/beta/%{name}-%{tversion}.tar.bz2
+Group: 		System/Configuration/Other
+URL: 		http://gosa.gonicus.de
+Source: 	ftp://oss.GONICUS.de/pub/gosa/beta/%{name}-%{version}.tar.bz2
 Source1:	gosa.conf.mdv
 Source2:	README.urpmi
 # http://www.bettina-attack.de/jonny/view.php/projects/php_ole/
 Source3:	php_ole-%{oleversion}.tar.bz2
-URL: 		http://gosa.gonicus.de
-Group: 		System/Configuration/Other
 Requires:	apache-mod_php
 Requires:	php-ldap
 Requires:	php-imap
@@ -30,8 +27,11 @@ Requires:	php-cups
 Requires:	fping
 Requires:	imagemagick
 Requires:	smbldap-tools
+%if %mdkversion < 201010
+Requires(post):   rpm-helper
+Requires(postun):   rpm-helper
+%endif
 Buildarch: 	noarch
-BuildRequires:  apache-base > 2.0.54
 BuildRoot: 	%{_tmppath}/%{name}-%{version}
 
 %description
@@ -52,7 +52,7 @@ Requires:	openldap-servers openldap-clients
 Contains the Schema definition files for the GOSA admin package.
 
 %prep
-%setup -q -a 3 -n %{name}-%{tversion}
+%setup -q -a 3
 find . -depth -name CVS -type d | xargs rm -rf
 cp %{SOURCE2} .
 
@@ -61,7 +61,7 @@ cp %{SOURCE2} .
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}%{appdir}/%{name}
+mkdir -p %{buildroot}%{_datadir}/%{name}
 
 # (sb) seems broken - bad path to includes
 sed -i 's|Excel/||g' include/php_writeexcel/class.excel.php
@@ -73,15 +73,15 @@ done
 
 DIRS="ihtml plugins html include locale"
 for i in $DIRS; do \
-  cp -ua $i %{buildroot}%{appdir}/%{name}/$i ; \
+  cp -ua $i %{buildroot}%{_datadir}/%{name}/$i ; \
 done
 
 # (sb) make rpmlint happier
 find doc -type f | xargs chmod -x
 
 # (sb) error during setup if this isn't found
-mkdir -p %{buildroot}%{appdir}/%{name}/contrib
-cp -a contrib/gosa.conf %{buildroot}%{appdir}/%{name}/contrib
+mkdir -p %{buildroot}%{_datadir}/%{name}/contrib
+cp -a contrib/gosa.conf %{buildroot}%{_datadir}/%{name}/contrib
 
 # (sb) used by smarty compile
 mkdir -p %{buildroot}/var/spool/gosa
@@ -89,18 +89,17 @@ mkdir -p %{buildroot}/var/spool/gosa
 # Copy default config
 mkdir -p %{buildroot}%{_sysconfdir}/%{name}
 install -m 640 %{SOURCE1} %{buildroot}%{_sysconfdir}/%{name}/%{name}.conf
-mkdir -p %{buildroot}%{webconf}
+mkdir -p %{buildroot}%{_webappconfdir}
 
-cat > %{buildroot}%{webconf}/%{name}.conf <<EOF
-# Just to be sure
-<Directory "%{appdir}/%{name}/html">
-	Options None
-	AllowOverride None
-	Order allow,deny
-	Allow from all
+cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
+Alias /gosa %{_datadir}/%{name}/html
+
+<Directory %{_datadir}/%{name}/html>
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1
+    ErrorDocument 403 "Access denied per %{_webappconfdir}/%{name}.conf"
 </Directory>
-# Set alias to gosa
-Alias /gosa %{appdir}/%{name}/html
 EOF
 
 mkdir -p %{buildroot}%{_datadir}/openldap/schema/%{name}
@@ -219,10 +218,9 @@ rm -rf %{buildroot}
 %doc contrib/scripts contrib/vacation_example.txt
 %doc *.php_ole
 
-%config(noreplace) %{webconf}/%{name}.conf
+%config(noreplace) %{_webappconfdir}/%{name}.conf
 %attr(0750, %{apacheuser}, %{apachegroup}) %dir /var/spool/%{name}
-%dir %{appdir}/%{name}
-%{appdir}/%{name}/*
+%{_datadir}/%{name}
 %dir %{_sysconfdir}/%{name}
 %attr(0640, root, %{apachegroup}) %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 
@@ -231,5 +229,3 @@ rm -rf %{buildroot}
 %doc contrib/demo.ldif contrib/openldap/slapd.conf
 %dir %{_datadir}/openldap/schema/%{name}
 %{_datadir}/openldap/schema/%{name}/*
-
-
