@@ -1,0 +1,5 @@
+sources:
+  "gosa-2.5.14.tar.bz2:"	9f4ec20e79137e463cc5db4e7dca10cca00f3aa9
+  "gosa.conf.mdv:"	557054cb08aaa96d84c03e19a7efdc7d6aa65308
+  "php_ole-0.0.0.tar.bz2:"	498b6329a90f71f7dcd13d57f519be7235bde5eb
+  "README.urpmi:"	7ae90b43990936b8b08448966bad4e27dac95d81
