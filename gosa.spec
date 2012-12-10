@@ -233,3 +233,82 @@ rm -rf %{buildroot}
 %doc contrib/demo.ldif contrib/openldap/slapd.conf
 %dir %{_datadir}/openldap/schema/%{name}
 %{_datadir}/openldap/schema/%{name}/*
+
+
+%changelog
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 2.5.14-7mdv2011.0
++ Revision: 610963
+- rebuild
+
+* Tue Feb 23 2010 Guillaume Rousse <guillomovitch@mandriva.org> 2.5.14-6mdv2010.1
++ Revision: 510425
+- rely on filetrigger for reloading apache configuration begining with 2010.1,
+  rpm-helper macros otherwise
+- install under %%{_datadir}, rather than %%{_localstatedir}
+
+* Mon Oct 05 2009 Guillaume Rousse <guillomovitch@mandriva.org> 2.5.14-5mdv2010.0
++ Revision: 454237
+- small spec cleanup
+- don't duplicate spec-helper job
+- fix dependencies, php-mhash doesn't exist anymore
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 2.5.14-4mdv2010.0
++ Revision: 429289
+- rebuild
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - lowercase ImageMagick
+
+* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 2.5.14-3mdv2009.0
++ Revision: 246521
+- rebuild
+
+* Wed Dec 26 2007 Emmanuel Andry <eandry@mandriva.org> 2.5.14-1mdv2008.1
++ Revision: 137818
+- New version
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sun Sep 30 2007 Emmanuel Andry <eandry@mandriva.org> 2.5.8-2mdv2008.0
++ Revision: 93932
+- drop requires php-kadm5 (bug #33143)
+
+
+* Sat Feb 17 2007 Emmanuel Andry <eandry@mandriva.org> 2.5.8-1mdv2007.0
++ Revision: 122155
+- New version 2.5.8
+- Import gosa
+
+* Tue Sep 12 2006 Emmanuel Andry <eandry@mandriva.org> 2.5.2-2mdv2007.0
+- fix bug #22556
+
+* Mon Aug 14 2006 Emmanuel Andry <eandry@mandriva.org> 2.5.2-1mdv2007.0
+- 2.5.2
+- switch to php5
+
+* Mon Jun 19 2006 Emmanuel Andry <eandry@mandriva.org> 2.5.1-1mdv2007.0
+- 2.5.1
+- %%mkrel
+
+* Wed Mar 29 2006 Stew Benedict <sbenedict@mandriva.com> 2.4-1mdk
+- 2.4
+- drop P0
+- drop help workaround in %%install (online help is still in TODO)
+- fix bad paths in include/php_writeexcel/class.excel.php
+- add SOURCE3 to get missing includes for the embedded WriteExcel
+- update requires, README.urpmi
+
+* Sat Oct 01 2005 Stew Benedict <sbenedict@mandriva.com> 2.4-0.beta2.2mdk
+- split into gosa, gosa-schema
+- fix %%postun, clarify README.urpmi
+
+* Fri Sep 30 2005 Stew Benedict <sbenedict@mandriva.com> 2.4-0.beta2.1mdk
+- First Mandriva release (2.3 is too buggy according to mail list)
+
+* Mon Feb 21 2005 Lars Scheiter <lars.scheiter@GONICUS.de> 2.3
+- Update version to 2.3 (upstream)
+

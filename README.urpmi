@@ -1,0 +1,68 @@
+Additional notes for installing GOsa on Mandriva Linux
+Sep 29, 2005 Stew Benedict <sbenedict@mandriva.com>
+
+I've tried to automate as much of the setup as possible, short of
+altering an existing openldap setup in an undesirable fashion.
+
+The package is split into two parts, gosa and gosa-schema. If your
+openldap server and the apache server are on the same machine, install 
+them both. Otherwise put the gosa-schema package on the openldap server.
+
+-------------------------------------------------------------------
+gosa-schema:
+
+Conflicts in default slapd.conf:
+
+I had to comment out the following lines in /etc/openldap/slapd.conf
+due to conflicts with the GOsa schemas. (you'll need to do this manually)
+
+#include /usr/share/openldap/schema/kolab.schema
+#include /usr/share/openldap/schema/evolutionperson.schema
+
+I uncommented the rootpw entry in /etc/openldap/slapd.conf
+
+Loading of GOsa schemas:
+
+The %%post script of the rpm package adds the following entry to
+/etc/openldap/schema/local.schema:
+
+include /usr/share/openldap/schema/gosa/gosa-core.schema
+
+Loading openldap data for GOsa (assuming the ldap service is running):
+
+I've provided 2 files with the core data to get GOsa working on an empty
+openldap database:
+
+/usr/share/openldap/schema/gosa/example.ldif
+/usr/share/openldap/schema/gosa/gosa.ldif
+
+These setup an example dn: dc=example,dc=com (like the default slapd.conf)
+
+You can load these by: (assuming a rootdn=Manager, rootpw=secret in slapd.conf)
+
+ldapadd -f /usr/share/openldap/schema/gosa/example.ldif -x -D "cn=Manager,dc=example,dc=com" -w secret
+ldapadd -f /usr/share/openldap/schema/gosa/gosa.ldif -x -D "cn=Manager,dc=example,dc=com" -w secret
+
+(You'll note the "people" ou is commented out in example.ldif. I found that it
+conflicts with the "People" ou in gosa.conf)
+
+"slapcat" should list this loaded data
+---------------------------------------------------------------------------
+gosa:
+
+You should now be able to login as user "admin", password "tester" at
+http://localhost/gosa/
+
+If your ldap server is on another host, you can edit lines 177, 180 in 
+/etc/gosa/gosa.conf and replace localhost with the correct hostname. Or
+do something like:
+
+sed -i 's|localhost|my_host|g' /etc/gosa/gosa.conf
+
+If you want to go through the gosa setup like the tarball install does, 
+either remove or rename /etc/gosa/gosa.conf.
+ 
+I also found I needed to change the default "memory_limit = 8M" in 
+php4.ini to 32M.
+ 
+
