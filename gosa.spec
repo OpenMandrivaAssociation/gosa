@@ -5,7 +5,7 @@
 Summary: 	Web Based LDAP Administration Program 
 Name:		gosa
 Version: 	2.5.14
-Release:	%mkrel 7
+Release:	8
 License: 	GPL
 Group: 		System/Configuration/Other
 URL: 		http://gosa.gonicus.de
@@ -186,10 +186,6 @@ EOF
 # (sb) rpmlint
 chmod +x contrib/scripts/*.pl
 
-%post
-%if %mdkversion < 201010
-%_post_webapp
-%endif
 
 %post schema
 grep -q "^include %{_datadir}/openldap/schema/%{name}/%{name}-core.schema" %{_sysconfdir}/openldap/schema/local.schema || echo "include %{_datadir}/openldap/schema/%{name}/%{name}-core.schema" >> /etc/openldap/schema/local.schema
@@ -197,10 +193,6 @@ if [ -f /var/lock/subsys/ldap ]; then
     /etc/rc.d/init.d/ldap restart 1>&2;
 fi
 
-%postun
-%if %mdkversion < 201010
-%_postun_webapp
-%endif
 
 %postun schema
 sed -i "s|^include %{_datadir}/openldap/schema/%{name}/%{name}-core.schema||" %{_sysconfdir}/openldap/schema/local.schema
