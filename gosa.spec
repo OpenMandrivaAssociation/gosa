@@ -15,6 +15,7 @@ Source2:	README.urpmi
 # http://www.bettina-attack.de/jonny/view.php/projects/php_ole/
 Source3:	php_ole-%{oleversion}.tar.bz2
 Requires:	apache-mod_php
+Requires:   apache-mod_socache_shmcb
 Requires:	php-ldap
 Requires:	php-imap
 Requires:	php-mbstring
@@ -95,9 +96,7 @@ cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
 Alias /gosa %{_datadir}/%{name}/html
 
 <Directory %{_datadir}/%{name}/html>
-    Order deny,allow
-    Deny from all
-    Allow from 127.0.0.1
+    Require host 127.0.0.1
     ErrorDocument 403 "Access denied per %{_webappconfdir}/%{name}.conf"
 </Directory>
 EOF
