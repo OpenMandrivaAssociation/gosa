@@ -5,7 +5,7 @@
 Summary: 	Web Based LDAP Administration Program 
 Name:		gosa
 Version: 	2.5.14
-Release:	9
+Release:	9.1
 License: 	GPL
 Group: 		System/Configuration/Other
 URL: 		http://gosa.gonicus.de
