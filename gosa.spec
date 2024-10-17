@@ -8,7 +8,7 @@ Version: 	2.5.14
 Release:	11
 License: 	GPL
 Group: 		System/Configuration/Other
-URL: 		http://gosa.gonicus.de
+URL: 		https://gosa.gonicus.de
 Source: 	ftp://oss.GONICUS.de/pub/gosa/beta/%{name}-%{version}.tar.bz2
 Source1:	gosa.conf.mdv
 Source2:	README.urpmi
